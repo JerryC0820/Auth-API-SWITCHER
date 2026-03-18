@@ -71,7 +71,12 @@ import {
 import { authClient } from './services/auth-client';
 import './shell.css';
 
-const OPENAI_BRAND_ICON_SRC = '/assets/icons/openai.png';
+const PUBLIC_ASSET_BASE = (import.meta.env.BASE_URL || './').replace(/\/?$/, '/');
+const publicAssetPath = (relativePath: string): string =>
+  `${PUBLIC_ASSET_BASE}${relativePath.replace(/^\/+/, '')}`;
+
+const OPENAI_BRAND_ICON_SRC = publicAssetPath('assets/icons/openai.png');
+const SUPPORT_WECHAT_QR_SRC = publicAssetPath('assets/support/wechat-support.png');
 const APP_DISPLAY_NAME = 'Auth API Switcher';
 const APP_SUBTITLE = '登录切换、更新检测、授权与邀请入口';
 const APP_SUPPORT_EMAIL = '18705011741@qq.com';
@@ -107,7 +112,7 @@ const ABOUT_QR_ITEMS: AboutDialogQrItem[] = [
     title: '个人微信',
     subtitle: '扫码后可一对一沟通',
     hint: '扫码即可添加客服微信。',
-    imageSrc: '/assets/support/wechat-support.png',
+    imageSrc: SUPPORT_WECHAT_QR_SRC,
   },
   {
     id: 'group',
@@ -154,7 +159,7 @@ const FOOTER_HELP_QR_ITEMS: FooterHelpCardQrItem[] = [
     title: '客服二维码',
     subtitle: '个人联系入口',
     hint: '扫码即可添加客服微信。',
-    imageSrc: '/assets/support/wechat-support.png',
+    imageSrc: SUPPORT_WECHAT_QR_SRC,
   },
   {
     id: 'help-group',
@@ -5291,6 +5296,7 @@ export default function App() {
         open={userCenterOpen}
         session={userCenterSession}
         avatarImageSrc={avatarImageSrc}
+        brandIconSrc={OPENAI_BRAND_ICON_SRC}
         brandFrameEnabled={userCenterBrandFrameEnabled}
         authMode={authMode}
         authForm={authForm}

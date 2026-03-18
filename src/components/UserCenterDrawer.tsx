@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {
   BadgeHelp,
@@ -42,6 +43,7 @@ interface UserCenterDrawerProps {
   open: boolean;
   session: UserCenterSession;
   avatarImageSrc: string | null;
+  brandIconSrc: string;
   brandFrameEnabled: boolean;
   authMode: AuthFormMode;
   authForm: UserCenterAuthForm;
@@ -106,6 +108,7 @@ export function UserCenterDrawer({
   open,
   session,
   avatarImageSrc,
+  brandIconSrc,
   brandFrameEnabled,
   authMode,
   authForm,
@@ -146,6 +149,13 @@ export function UserCenterDrawer({
   );
 
   const authActionLabel = getAuthActionLabel(authMode);
+  const ambientStyle = useMemo(
+    () =>
+      ({
+        ['--brand-icon-mask' as string]: `url("${brandIconSrc}")`,
+      }) as CSSProperties,
+    [brandIconSrc],
+  );
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -153,6 +163,7 @@ export function UserCenterDrawer({
         <Dialog.Overlay className="drawer-overlay" />
         <div
           className={`user-drawer-ambient${brandFrameEnabled ? ' is-framed' : ' is-borderless'}`}
+          style={ambientStyle}
           aria-hidden="true"
         >
           <div className="user-drawer-ambient__halo" />

@@ -17,7 +17,8 @@ import type {
   WindowState,
 } from '../../shared/types';
 
-const APP_ICON_SRC = '/assets/icons/openai.png';
+const PUBLIC_ASSET_BASE = (import.meta.env.BASE_URL || './').replace(/\/?$/, '/');
+const APP_ICON_SRC = `${PUBLIC_ASSET_BASE}assets/icons/openai.png`;
 
 interface HostFormState {
   durationKey: HostLicenseDurationKey;

@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "minSupportedVersion": "0.1.0",
   "mandatory": false,
-  "releaseTime": "2026-03-18T11:43:02.872Z",
+  "releaseTime": "2026-03-18T12:42:22.878Z",
   "notes": "Release 0.1.0",
   "notesUrl": "release-notes/0.1.0.md",
-  "sha256": "c9fb4627a40ebff977f2a7b063da796df9517208635768ca37aa52ab616620fb",
+  "sha256": "acec5899611eb1839bea880f3f746d710f3d7d67e2d877ffcd647cd575f4a4f0",
   "signature": "",
   "mirrors": {
     "github": null,
@@ -17,7 +17,7 @@
     "win": {
       "installerUrl": "release-artifacts/win/Auth API Switcher-0.1.0-win-x64.exe",
       "portableUrl": null,
-      "sha256": "c9fb4627a40ebff977f2a7b063da796df9517208635768ca37aa52ab616620fb"
+      "sha256": "acec5899611eb1839bea880f3f746d710f3d7d67e2d877ffcd647cd575f4a4f0"
     }
   }
 }
