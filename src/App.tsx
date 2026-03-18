@@ -927,7 +927,7 @@ const mapUpdateAvailabilityLabel = (updateState: UpdateState): string => {
     case 'checking':
       return '检查中';
     case 'unconfigured':
-      return '未配置更新源';
+      return '更新未配置';
     case 'available':
       return updateState.updateKind === 'patch' ? '发现新修复' : '发现新版本';
     case 'downloading':
@@ -2349,6 +2349,7 @@ export default function App() {
   const updatePrimaryActionLabel =
     updateState.currentPlatform === 'win' ? '下载安装更新' : '下载更新包';
   const updateBadgeVisible = updateState.updateAvailable || updateState.blockedByMandatory;
+  const updateInlineNotice = null;
   const platformTags = useMemo(
     () => [
       updateState.currentPlatform === 'win'
@@ -2487,7 +2488,7 @@ export default function App() {
       case 'register':
         return '注册并继续';
       case 'forgot':
-        return '发送重置邮件';
+        return '敬请期待';
       default:
         return '登录并验证账号';
     }
@@ -2982,6 +2983,11 @@ export default function App() {
       if (result.state.updateAvailable || result.state.blockedByMandatory) {
         setUpdateDialogOpen(true);
       }
+      if (result.state.availability === 'unconfigured') {
+        setUpdateDialogOpen(true);
+        setToast(null);
+        return;
+      }
       setToast({ tone: getUpdateActionTone(result), message: result.message });
     } catch (error) {
       const message = error instanceof Error ? error.message : '检查更新失败。';
@@ -3276,13 +3282,10 @@ export default function App() {
     }
 
     if (authMode === 'forgot') {
-      await applyAuthResult(
-        'forgot',
-        authClient.requestPasswordReset({
-          email: authForm.email,
-          verificationCode: authForm.verificationCode,
-        }),
-      );
+      setToast({
+        tone: 'info',
+        message: '当前未配置当前功能，敬请期待。',
+      });
       return;
     }
 
@@ -3808,6 +3811,11 @@ export default function App() {
             <div className="main-status-chip">
               上次检查: <strong>{formatDateTime(updateState.lastCheckedAt)}</strong>
             </div>
+            {updateInlineNotice ? (
+              <div className="main-status-chip main-status-chip--detail is-orange" title={updateInlineNotice}>
+                更新配置: <strong>{updateInlineNotice}</strong>
+              </div>
+            ) : null}
             {state.summary.currentAuthExists && !state.summary.authRecognized ? (
               <button
                 type="button"

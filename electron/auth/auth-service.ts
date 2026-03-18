@@ -1,4 +1,3 @@
-import os from 'node:os';
 import path from 'node:path';
 import { app } from 'electron';
 import fs from 'fs-extra';
@@ -29,6 +28,24 @@ import { readLocalLicenseHostPublicKey } from './license-host-service';
 interface StoredAuthFile {
   version: number;
   state: AuthState;
+  sessionToken?: string | null;
+}
+
+interface RemoteAuthActionResult extends AuthActionResult {
+  sessionToken?: string;
+}
+
+interface RemoteErrorPayload {
+  error?: {
+    message?: string | null;
+    details?: string | null;
+  };
+  message?: string | null;
+}
+
+interface AuthRequestPayload {
+  currentVersion: string;
+  device: DeviceIdentity;
 }
 
 const AUTH_FILE_NAME = 'auth-shell.json';
@@ -36,10 +53,25 @@ const AUTH_FILE_VERSION = 1;
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const ONLINE_GRACE_MS = 6 * 60 * 60 * 1000;
 const ROLLBACK_TOLERANCE_MS = 2 * 60 * 1000;
+const REMOTE_AUTH_API_DEV_URL = 'http://127.0.0.1:8787';
+const REMOTE_AUTH_API_PROD_URL =
+  'https://auth-api-switcher-auth-api.jerryauthswitcher.workers.dev';
+const REMOTE_AUTH_OFFLINE_NOTICE = '在线授权服务暂时不可达，当前显示本地缓存。';
+const PASSWORD_RESET_PLACEHOLDER_MESSAGE = '当前未配置当前功能，敬请期待。';
 const MAX_PERMANENT_SLOTS = 4;
 const REWARD_PREVIEW = ['首次成功 +7 天', '第二次成功 +30 天', '第三次成功 = 永久'];
 const INVITE_RULE_SUMMARY =
   '正式授权用户可申请 one-time invite code；新设备兑换成功后，邀请奖励按 7 天 / 30 天 / 永久 三阶段递增，邀请永久最多占用 4 个槽位。';
+
+class RemoteAuthRequestError extends Error {
+  constructor(
+    message: string,
+    readonly status: number | null = null,
+  ) {
+    super(message);
+    this.name = 'RemoteAuthRequestError';
+  }
+}
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
@@ -163,6 +195,20 @@ const buildInviteProgress = (invite: InviteProgress, license: LicenseSummary): I
   };
 };
 
+const withBootstrapNotice = (
+  bootstrap: HeartbeatBootstrap,
+  notice: string | null,
+): HeartbeatBootstrap => {
+  if (!notice) {
+    return bootstrap;
+  }
+
+  return {
+    ...bootstrap,
+    notice,
+  };
+};
+
 const buildBootstrap = (
   currentVersion: string,
   previous: HeartbeatBootstrap | null,
@@ -187,7 +233,7 @@ const buildBootstrap = (
     minSupportedVersion,
     mandatoryUpdate,
     allowCoreFeatures: !mandatoryUpdate || graceSecondsRemaining > 0,
-    notice: notice ?? previous?.notice ?? '当前使用 mock 在线层，后续可切到真实 Auth API。',
+    notice: notice ?? previous?.notice ?? '当前使用本地 mock 在线层，后续可切到真实 Auth API。',
   };
 };
 
@@ -417,7 +463,12 @@ const parseRewardFromStage = (
   };
 };
 
-const refreshDerivedState = (state: AuthState, currentVersion: string, notice: string | null): AuthState => {
+const refreshDerivedState = (
+  state: AuthState,
+  currentVersion: string,
+  notice: string | null,
+  options?: { preserveBootstrap?: boolean },
+): AuthState => {
   const nextLicense =
     state.license.permanent || !state.license.expiresAt
       ? {
@@ -435,11 +486,14 @@ const refreshDerivedState = (state: AuthState, currentVersion: string, notice: s
         })();
 
   const nextInvite = buildInviteProgress(state.invite, nextLicense);
+  const nextBootstrap = options?.preserveBootstrap
+    ? withBootstrapNotice(state.bootstrap, notice)
+    : buildBootstrap(currentVersion, state.bootstrap, notice);
   return {
     ...state,
     license: nextLicense,
     invite: nextInvite,
-    bootstrap: buildBootstrap(currentVersion, state.bootstrap, notice),
+    bootstrap: nextBootstrap,
   };
 };
 
@@ -482,9 +536,21 @@ export class AuthService {
 
   private readonly currentVersion = app.getVersion();
 
+  private readonly remoteAuthBaseUrl: string | null;
+
   private state: AuthState | null = null;
 
+  private sessionToken: string | null = null;
+
   private readonly listeners = new Set<(state: AuthState) => void>();
+
+  constructor() {
+    const configuredUrl =
+      process.env.CODEX_WORKSPACE_AUTH_API_URL?.trim() ||
+      process.env.AUTH_API_BASE_URL?.trim() ||
+      (app.isPackaged ? REMOTE_AUTH_API_PROD_URL : REMOTE_AUTH_API_DEV_URL);
+    this.remoteAuthBaseUrl = configuredUrl || null;
+  }
 
   async initialize(): Promise<void> {
     if (this.state) {
@@ -493,7 +559,25 @@ export class AuthService {
 
     const device = buildDeviceIdentity();
     const stored = await this.loadStoredState(device);
-    this.state = refreshDerivedState(stored, this.currentVersion, null);
+    this.sessionToken = stored.sessionToken;
+    this.state = refreshDerivedState(stored.state, this.currentVersion, null, {
+      preserveBootstrap: true,
+    });
+
+    if (this.hasRemoteAuthConfigured()) {
+      await this.refreshRemoteBootstrap({ emit: false });
+      if (this.sessionToken) {
+        await this.refreshRemoteSessionState({
+          emit: false,
+          fallbackToLocalOnUnavailable: false,
+        });
+      } else {
+        await this.saveState();
+      }
+      return;
+    }
+
+    this.state = refreshDerivedState(this.state, this.currentVersion, null);
     await this.saveState();
   }
 
@@ -523,26 +607,22 @@ export class AuthService {
       throw new Error('请输入密码。');
     }
 
-    const current = this.state as AuthState;
-    const profile = createProfile(current.profile?.displayName ?? '', email, current.profile);
-    const nextLicense =
-      current.license.status === 'inactive' || current.license.status === 'expired'
-        ? createTrialLicense()
-        : current.license;
+    if (this.hasRemoteAuthConfigured()) {
+      try {
+        return await this.performRemoteAuthAction('/api/auth/login', {
+          email,
+          password: input.password,
+          rememberMe: input.rememberMe,
+          verificationCode: input.verificationCode,
+        });
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
 
-    this.state = refreshDerivedState(
-      {
-        ...current,
-        sessionStatus: 'authenticated',
-        profile,
-        license: nextLicense,
-        lastAuthAction: 'login',
-      },
-      this.currentVersion,
-      null,
-    );
-    await this.persistAndEmit();
-    return { state: clone(this.state), message: `登录成功，欢迎回来 ${profile.displayName}。` };
+    return this.loginLocal(input);
   }
 
   async register(input: RegisterInput): Promise<AuthActionResult> {
@@ -559,20 +639,22 @@ export class AuthService {
       throw new Error('请输入密码。');
     }
 
-    const profile = createProfile(displayName, email, null);
-    this.state = refreshDerivedState(
-      {
-        ...(this.state as AuthState),
-        sessionStatus: 'authenticated',
-        profile,
-        license: createTrialLicense(),
-        lastAuthAction: 'register',
-      },
-      this.currentVersion,
-      null,
-    );
-    await this.persistAndEmit();
-    return { state: clone(this.state), message: `注册成功，已为 ${displayName} 创建账号。` };
+    if (this.hasRemoteAuthConfigured()) {
+      try {
+        return await this.performRemoteAuthAction('/api/auth/register', {
+          displayName,
+          email,
+          password: input.password,
+          verificationCode: input.verificationCode,
+        });
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    return this.registerLocal(input);
   }
 
   async requestPasswordReset(input: PasswordResetInput): Promise<AuthActionResult> {
@@ -588,12 +670,13 @@ export class AuthService {
         lastAuthAction: 'forgot-password',
       },
       this.currentVersion,
-      '重置密码邮件已模拟发送，后续接真实邮件服务。',
+      PASSWORD_RESET_PLACEHOLDER_MESSAGE,
+      { preserveBootstrap: true },
     );
     await this.persistAndEmit();
     return {
       state: clone(this.state),
-      message: `已向 ${email} 模拟发送重置邮件。`,
+      message: `${email} 的找回密码功能当前未配置，敬请期待。`,
     };
   }
 
@@ -616,14 +699,53 @@ export class AuthService {
 
     const current = this.state as AuthState;
     const hostDuration = await tryParseHostActivationCode(code, current.device);
-    const duration = hostDuration ?? parseActivationCode(code);
+    if (hostDuration) {
+      const license = applyDurationToLicense(
+        current.license,
+        hostDuration,
+        'activation',
+        hostDuration.issuerLabel,
+        hostDuration.stageLabel,
+      );
+
+      this.state = refreshDerivedState(
+        {
+          ...current,
+          sessionStatus: current.profile ? 'authenticated' : current.sessionStatus,
+          license,
+          lastAuthAction: 'activation-code',
+        },
+        this.currentVersion,
+        null,
+      );
+      await this.persistAndEmit();
+      return {
+        state: clone(this.state),
+        message: hostDuration.permanent ? '永久授权已生效。' : `${hostDuration.typeLabel} 已生效。`,
+      };
+    }
+
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        return await this.performRemoteAuthAction(
+          '/api/license/activate',
+          { code },
+          { requiresSession: true },
+        );
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    const duration = parseActivationCode(code);
     const license = applyDurationToLicense(
       current.license,
       duration,
       'activation',
-      hostDuration?.issuerLabel ?? '激活码授权',
-      hostDuration?.stageLabel ??
-        (duration.permanent ? '已激活永久授权' : `已录入授权码 ${code.slice(-4).toUpperCase()}`),
+      '激活码授权',
+      duration.permanent ? '已激活永久授权' : `已录入授权码 ${code.slice(-4).toUpperCase()}`,
     );
 
     this.state = refreshDerivedState(
@@ -645,6 +767,386 @@ export class AuthService {
 
   async requestInviteCode(): Promise<AuthActionResult> {
     await this.ensureReady();
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        return await this.performRemoteAuthAction('/api/invite/request', {}, { requiresSession: true });
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    return this.requestInviteCodeLocal();
+  }
+
+  async redeemInviteCode(input: RedeemInviteCodeInput): Promise<AuthActionResult> {
+    await this.ensureReady();
+    const code = input.code.trim().toUpperCase();
+    if (!code) {
+      throw new Error('请输入邀请码。');
+    }
+
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        return await this.performRemoteAuthAction(
+          '/api/invite/redeem',
+          { code },
+          { requiresSession: true },
+        );
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    return this.redeemInviteCodeLocal({ code });
+  }
+
+  async claimInviteReward(): Promise<AuthActionResult> {
+    await this.ensureReady();
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        return await this.performRemoteAuthAction('/api/invite/claim', {}, { requiresSession: true });
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    return this.claimInviteRewardLocal();
+  }
+
+  async applyRewardCode(input: ApplyRewardCodeInput): Promise<AuthActionResult> {
+    await this.ensureReady();
+    const code = input.code.trim();
+    if (!code) {
+      throw new Error('请输入奖励码。');
+    }
+
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        return await this.performRemoteAuthAction(
+          '/api/reward/apply',
+          { code },
+          { requiresSession: true },
+        );
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    return this.applyRewardCodeLocal({ code });
+  }
+
+  async listInviteRecords(): Promise<InviteRecordsResult> {
+    await this.ensureReady();
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        const result = await this.requestRemoteJson<InviteRecordsResult>(
+          '/api/invite/records',
+          { method: 'GET' },
+          { requiresSession: true },
+        );
+
+        this.state = {
+          ...(this.state as AuthState),
+          inviteRecords: clone(result.inviteRecords),
+          rewardRecords: clone(result.rewardRecords),
+        };
+        await this.persistAndEmit();
+        return {
+          inviteRecords: clone(result.inviteRecords),
+          rewardRecords: clone(result.rewardRecords),
+        };
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    const current = this.state as AuthState;
+    return {
+      inviteRecords: clone(current.inviteRecords),
+      rewardRecords: clone(current.rewardRecords),
+    };
+  }
+
+  async heartbeat(): Promise<AuthActionResult> {
+    await this.ensureReady();
+    if (this.hasRemoteAuthConfigured() && this.sessionToken) {
+      try {
+        return await this.refreshRemoteSessionState({
+          emit: true,
+          fallbackToLocalOnUnavailable: true,
+        });
+      } catch (error) {
+        if (!this.isRemoteUnavailableError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    return this.heartbeatLocal();
+  }
+
+  async getHeartbeatBootstrap(): Promise<HeartbeatBootstrap> {
+    await this.ensureReady();
+    if (this.hasRemoteAuthConfigured()) {
+      await this.refreshRemoteBootstrap({ emit: false });
+    }
+
+    return clone((this.state as AuthState).bootstrap);
+  }
+
+  private hasRemoteAuthConfigured(): boolean {
+    return Boolean(this.remoteAuthBaseUrl);
+  }
+
+  private isRemoteUnavailableError(error: unknown): boolean {
+    return error instanceof RemoteAuthRequestError && error.status === null;
+  }
+
+  private buildRemoteUrl(endpointPath: string): string {
+    if (!this.remoteAuthBaseUrl) {
+      throw new RemoteAuthRequestError('当前未配置在线授权服务地址。');
+    }
+
+    return `${this.remoteAuthBaseUrl.replace(/\/+$/, '')}${endpointPath}`;
+  }
+
+  private getCurrentDevice(): DeviceIdentity {
+    return (this.state as AuthState)?.device ?? buildDeviceIdentity();
+  }
+
+  private buildRemotePayload<T extends Record<string, unknown>>(payload: T): T & AuthRequestPayload {
+    return {
+      ...payload,
+      currentVersion: this.currentVersion,
+      device: this.getCurrentDevice(),
+    };
+  }
+
+  private async requestRemoteJson<T>(
+    endpointPath: string,
+    init: RequestInit,
+    options?: { requiresSession?: boolean },
+  ): Promise<T> {
+    const headers = new Headers(init.headers);
+    if (init.body) {
+      headers.set('content-type', 'application/json; charset=utf-8');
+    }
+
+    if (options?.requiresSession) {
+      if (!this.sessionToken) {
+        throw new RemoteAuthRequestError('当前还没有在线登录会话。');
+      }
+      headers.set('authorization', `Bearer ${this.sessionToken}`);
+    }
+
+    let response: Response;
+    try {
+      response = await fetch(this.buildRemoteUrl(endpointPath), {
+        ...init,
+        headers,
+      });
+    } catch (error) {
+      throw new RemoteAuthRequestError(
+        error instanceof Error ? error.message : '在线授权服务不可达。',
+        null,
+      );
+    }
+
+    const responseText = await response.text();
+    const payload = responseText ? (JSON.parse(responseText) as T | RemoteErrorPayload) : ({} as T);
+    if (!response.ok) {
+      const remoteError = payload as RemoteErrorPayload;
+      const message =
+        remoteError.error?.message ??
+        remoteError.message ??
+        `在线授权服务请求失败（${response.status}）。`;
+
+      if (response.status === 401 || response.status === 403) {
+        await this.handleRemoteSessionInvalid(message);
+      }
+
+      throw new RemoteAuthRequestError(message, response.status);
+    }
+
+    return payload as T;
+  }
+
+  private async performRemoteAuthAction(
+    endpointPath: string,
+    payload: Record<string, unknown>,
+    options?: { requiresSession?: boolean },
+  ): Promise<AuthActionResult> {
+    const result = await this.requestRemoteJson<RemoteAuthActionResult>(
+      endpointPath,
+      {
+        method: 'POST',
+        body: JSON.stringify(this.buildRemotePayload(payload)),
+      },
+      options,
+    );
+
+    this.state = refreshDerivedState(result.state, this.currentVersion, result.state.bootstrap.notice, {
+      preserveBootstrap: true,
+    });
+    if (typeof result.sessionToken === 'string') {
+      this.sessionToken = result.sessionToken;
+    }
+    await this.persistAndEmit();
+    return {
+      state: clone(this.state),
+      message: result.message,
+    };
+  }
+
+  private async refreshRemoteBootstrap(options?: { emit?: boolean }): Promise<void> {
+    try {
+      const bootstrap = await this.requestRemoteJson<HeartbeatBootstrap>('/api/bootstrap', {
+        method: 'POST',
+        body: JSON.stringify(this.buildRemotePayload({})),
+      });
+
+      this.state = {
+        ...(this.state as AuthState),
+        bootstrap,
+      };
+      await this.saveState();
+      if (options?.emit) {
+        this.emit();
+      }
+    } catch (error) {
+      if (!this.isRemoteUnavailableError(error)) {
+        throw error;
+      }
+
+      this.state = refreshDerivedState(
+        this.state as AuthState,
+        this.currentVersion,
+        REMOTE_AUTH_OFFLINE_NOTICE,
+        { preserveBootstrap: true },
+      );
+      await this.saveState();
+      if (options?.emit) {
+        this.emit();
+      }
+    }
+  }
+
+  private async refreshRemoteSessionState(options?: {
+    emit?: boolean;
+    fallbackToLocalOnUnavailable?: boolean;
+  }): Promise<AuthActionResult> {
+    try {
+      const result = await this.requestRemoteJson<AuthActionResult>(
+        '/api/heartbeat',
+        {
+          method: 'POST',
+          body: JSON.stringify(this.buildRemotePayload({})),
+        },
+        { requiresSession: true },
+      );
+
+      this.state = refreshDerivedState(result.state, this.currentVersion, result.state.bootstrap.notice, {
+        preserveBootstrap: true,
+      });
+      await this.persistAndEmit();
+      return {
+        state: clone(this.state),
+        message: result.message,
+      };
+    } catch (error) {
+      if (!this.isRemoteUnavailableError(error)) {
+        throw error;
+      }
+
+      if (!options?.fallbackToLocalOnUnavailable) {
+        this.state = refreshDerivedState(
+          this.state as AuthState,
+          this.currentVersion,
+          REMOTE_AUTH_OFFLINE_NOTICE,
+          { preserveBootstrap: true },
+        );
+        await this.saveState();
+        if (options?.emit) {
+          this.emit();
+        }
+        return {
+          state: clone(this.state),
+          message: REMOTE_AUTH_OFFLINE_NOTICE,
+        };
+      }
+
+      return this.heartbeatLocal(REMOTE_AUTH_OFFLINE_NOTICE);
+    }
+  }
+
+  private async handleRemoteSessionInvalid(message: string): Promise<void> {
+    this.sessionToken = null;
+    this.state = refreshDerivedState(
+      {
+        ...(this.state as AuthState),
+        lastAuthAction: 'remote-session-expired',
+      },
+      this.currentVersion,
+      message,
+      { preserveBootstrap: true },
+    );
+    await this.saveState();
+  }
+
+  private async loginLocal(input: LoginInput): Promise<AuthActionResult> {
+    const current = this.state as AuthState;
+    const profile = createProfile(current.profile?.displayName ?? '', input.email.trim(), current.profile);
+    const nextLicense =
+      current.license.status === 'inactive' || current.license.status === 'expired'
+        ? createTrialLicense()
+        : current.license;
+
+    this.state = refreshDerivedState(
+      {
+        ...current,
+        sessionStatus: 'authenticated',
+        profile,
+        license: nextLicense,
+        lastAuthAction: 'login',
+      },
+      this.currentVersion,
+      null,
+    );
+    await this.persistAndEmit();
+    return { state: clone(this.state), message: `登录成功，欢迎回来 ${profile.displayName}。` };
+  }
+
+  private async registerLocal(input: RegisterInput): Promise<AuthActionResult> {
+    const profile = createProfile(input.displayName.trim(), input.email.trim(), null);
+    this.state = refreshDerivedState(
+      {
+        ...(this.state as AuthState),
+        sessionStatus: 'authenticated',
+        profile,
+        license: createTrialLicense(),
+        lastAuthAction: 'register',
+      },
+      this.currentVersion,
+      null,
+    );
+    await this.persistAndEmit();
+    return {
+      state: clone(this.state),
+      message: `注册成功，已为 ${input.displayName.trim()} 创建账号。`,
+    };
+  }
+
+  private async requestInviteCodeLocal(): Promise<AuthActionResult> {
     const current = this.state as AuthState;
     if (!current.profile) {
       throw new Error('请先登录后再申请邀请码。');
@@ -673,14 +1175,9 @@ export class AuthService {
     };
   }
 
-  async redeemInviteCode(input: RedeemInviteCodeInput): Promise<AuthActionResult> {
-    await this.ensureReady();
-    const code = input.code.trim().toUpperCase();
-    if (!code) {
-      throw new Error('请输入邀请码。');
-    }
-
+  private async redeemInviteCodeLocal(input: RedeemInviteCodeInput): Promise<AuthActionResult> {
     const current = this.state as AuthState;
+    const code = input.code.trim().toUpperCase();
     const ownCodes = [current.invite.inviteCode, current.invite.requestedInviteCode]
       .filter((item): item is string => Boolean(item))
       .map((item) => item.toUpperCase());
@@ -762,8 +1259,7 @@ export class AuthService {
     };
   }
 
-  async claimInviteReward(): Promise<AuthActionResult> {
-    await this.ensureReady();
+  private async claimInviteRewardLocal(): Promise<AuthActionResult> {
     const current = this.state as AuthState;
     const pendingRecord = current.inviteRecords.find((item) => item.status === 'reward-ready');
     if (!pendingRecord) {
@@ -793,7 +1289,8 @@ export class AuthService {
           ...current.invite,
           pendingRewardCount: Math.max(0, current.invite.pendingRewardCount - 1),
           slotsUsed:
-            current.invite.slotsUsed + (rewardDuration.permanent && current.invite.slotsUsed < MAX_PERMANENT_SLOTS ? 1 : 0),
+            current.invite.slotsUsed +
+            (rewardDuration.permanent && current.invite.slotsUsed < MAX_PERMANENT_SLOTS ? 1 : 0),
         },
         inviteRecords: current.inviteRecords.map((item) =>
           item.id === pendingRecord.id
@@ -813,15 +1310,9 @@ export class AuthService {
     };
   }
 
-  async applyRewardCode(input: ApplyRewardCodeInput): Promise<AuthActionResult> {
-    await this.ensureReady();
-    const code = input.code.trim();
-    if (!code) {
-      throw new Error('请输入奖励码。');
-    }
-
-    const duration = parseActivationCode(code);
+  private async applyRewardCodeLocal(input: ApplyRewardCodeInput): Promise<AuthActionResult> {
     const current = this.state as AuthState;
+    const duration = parseActivationCode(input.code.trim());
     const license = applyDurationToLicense(
       current.license,
       duration,
@@ -830,7 +1321,7 @@ export class AuthService {
       duration.permanent ? '奖励码升级为永久授权' : '奖励码已录入',
     );
     const rewardRecord = createRewardRecord(
-      code.toUpperCase(),
+      input.code.trim().toUpperCase(),
       '奖励码已应用',
       duration.typeLabel,
       'applied',
@@ -853,19 +1344,11 @@ export class AuthService {
     };
   }
 
-  async listInviteRecords(): Promise<InviteRecordsResult> {
-    await this.ensureReady();
+  private async heartbeatLocal(notice: string | null = null): Promise<AuthActionResult> {
     const current = this.state as AuthState;
-    return {
-      inviteRecords: clone(current.inviteRecords),
-      rewardRecords: clone(current.rewardRecords),
-    };
-  }
-
-  async heartbeat(): Promise<AuthActionResult> {
-    await this.ensureReady();
-    const current = this.state as AuthState;
-    const previousCheck = current.bootstrap.checkedAt ? new Date(current.bootstrap.checkedAt).getTime() : null;
+    const previousCheck = current.bootstrap.checkedAt
+      ? new Date(current.bootstrap.checkedAt).getTime()
+      : null;
     const rollbackDetected =
       previousCheck !== null && Date.now() + ROLLBACK_TOLERANCE_MS < previousCheck;
 
@@ -884,38 +1367,48 @@ export class AuthService {
         lastAuthAction: 'heartbeat',
       },
       this.currentVersion,
-      rollbackDetected ? '检测到系统时间回拨，已标记本地授权状态。' : null,
+      rollbackDetected ? '检测到系统时间回拨，已标记本地授权状态。' : notice,
+      { preserveBootstrap: Boolean(notice) },
     );
     await this.persistAndEmit();
     return {
       state: clone(this.state),
-      message: rollbackDetected ? '心跳完成，但检测到时间回拨。' : '心跳校验完成。',
+      message: rollbackDetected ? '心跳完成，但检测到时间回拨。' : notice ?? '心跳校验完成。',
     };
   }
 
-  async getHeartbeatBootstrap(): Promise<HeartbeatBootstrap> {
-    await this.ensureReady();
-    return clone((this.state as AuthState).bootstrap);
-  }
-
-  private async loadStoredState(device: DeviceIdentity): Promise<AuthState> {
+  private async loadStoredState(
+    device: DeviceIdentity,
+  ): Promise<{ state: AuthState; sessionToken: string | null }> {
     const exists = await fs.pathExists(this.dataFilePath);
     if (!exists) {
-      return createEmptyState(device, this.currentVersion);
+      return {
+        state: createEmptyState(device, this.currentVersion),
+        sessionToken: null,
+      };
     }
 
     try {
       const payload = (await fs.readJson(this.dataFilePath)) as StoredAuthFile;
       if (payload.version !== AUTH_FILE_VERSION || !payload.state) {
-        return createEmptyState(device, this.currentVersion);
+        return {
+          state: createEmptyState(device, this.currentVersion),
+          sessionToken: null,
+        };
       }
 
       return {
-        ...payload.state,
-        device,
+        state: {
+          ...payload.state,
+          device,
+        },
+        sessionToken: payload.sessionToken ?? null,
       };
     } catch {
-      return createEmptyState(device, this.currentVersion);
+      return {
+        state: createEmptyState(device, this.currentVersion),
+        sessionToken: null,
+      };
     }
   }
 
@@ -926,6 +1419,7 @@ export class AuthService {
       {
         version: AUTH_FILE_VERSION,
         state: this.state as AuthState,
+        sessionToken: this.sessionToken,
       } satisfies StoredAuthFile,
       { spaces: 2 },
     );

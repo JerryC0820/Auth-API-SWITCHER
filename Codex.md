@@ -2433,3 +2433,72 @@ English: Fix or conclusion: For BAT helpers in this repository, do not trust %%c
 
 English: Avoid next time: When validating a BAT in this workspace, prefer a deterministic test mode instead of piping interactive input through PowerShell-created files, because BOM and cmd redirection can produce misleading failures.
 中文：下次避免：在这个工作区验证 BAT 时，应优先使用确定性的测试模式，而不是通过 PowerShell 创建的输入文件去喂交互流程，因为 BOM 和 cmd 重定向很容易制造误导性失败。
+
+English: Task: Explain how to prepare Resend credentials for the new Workers backend, then begin the GitHub upload flow by wiring the remote, preparing the initial source commit, and pushing the repository without uploading obvious non-source backup artifacts.
+中文：任务：说明新的 Workers 后端所需的 Resend 凭据如何准备，然后开始 GitHub 上传流程，配置远端、准备首个源码提交，并在不上传明显的非源码备份产物的前提下完成推送。
+
+English: Request: Keep this batch focused on Resend credential preparation and GitHub source upload. Do not expand into client/backend integration or unrelated code changes.
+中文：要求：本批只围绕 Resend 凭据准备和 GitHub 源码上传，不要扩展到客户端/后端接线或无关代码修改。
+
+English: Investigation: The local repository had no git remote configured, no prior commit history, and no GitHub CLI installed. However, git user.name and user.email were already configured, and the target repository URL https://github.com/JerryC0820/Auth-API-SWITCHER.git was reachable.
+中文：调研：本地仓库原先没有配置 git remote，也没有任何提交历史，系统里也没有 GitHub CLI；但 git user.name 和 user.email 已经配置好，而且目标仓库地址 https://github.com/JerryC0820/Auth-API-SWITCHER.git 可以访问。
+
+English: Changed: Added origin pointing to the user’s GitHub repository, staged only the project source/config/docs/history files instead of unrelated screenshot/zip/reference artifacts, created the root commit `16b31f92d9dff346f63731e77ff7f70ea83bdd33`, and successfully pushed branch master to origin/master.
+中文：改动：为用户的 GitHub 仓库配置了 origin，只暂存了项目源码/配置/文档/记录文件，没有把无关截图、zip 备份和参考目录一起推上去；随后创建了根提交 `16b31f92d9dff346f63731e77ff7f70ea83bdd33`，并成功把 master 分支推送到了 origin/master。
+
+English: Validation: `git remote -v` now shows origin at the user repository, `git push -u origin master` succeeded, and the remaining untracked files are still only temp BAT files, screenshot references, and local backup/archive folders.
+中文：验证：`git remote -v` 现在已经显示指向用户仓库的 origin，`git push -u origin master` 已成功完成，当前剩余未跟踪文件仍然只是 BAT 临时文件、界面对照截图和本地备份/归档目录。
+
+English: Failure: A first staging attempt using a PowerShell array with `git add -- @paths` did not actually stage files, because PowerShell parameter passing did not expand into the external git command the way expected.
+中文：失败：第一次尝试用 PowerShell 数组配合 `git add -- @paths` 来暂存文件时并没有真正进入暂存区，因为 PowerShell 的参数传递并没有按预期展开给外部 git 命令。
+
+English: Fix or conclusion: In this workspace, when selectively staging a first large source snapshot from PowerShell, use an explicit foreach loop that calls `git add` one path at a time. It is slower but deterministic.
+中文：修复或结论：在这个工作区里，如果要从 PowerShell 有选择地暂存第一批大体量源码，应该改用显式 foreach 循环逐个路径调用 `git add`。虽然慢一点，但行为确定。
+
+English: Avoid next time: For source uploads, do not blindly `git add .` in this repository because the root also contains screenshots, zip backups, and reference folders that are not part of the product source.
+中文：下次避免：在这个仓库做源码上传时，不要直接无脑 `git add .`，因为根目录还混有截图、zip 备份和参考目录，它们并不属于产品源码。
+
+English: Task: Continue Prompt A by wiring the desktop client auth flow toward the Cloudflare Workers + D1 backend without depending on Resend, and change the in-client forgot-password action to a placeholder message.
+中文：任务：继续推进 Prompt A，把桌面客户端授权流开始接到 Cloudflare Workers + D1 后端且不依赖 Resend，同时把客户端里的忘记密码动作改成占位提示。
+
+English: Request: Keep this batch limited to auth-flow continuation only. Do not expand into packaging, release, local license host UI, or unrelated frontend restyling.
+中文：要求：本批只处理授权流续接，不要扩展到打包发布、本地主机界面或无关前端样式重做。
+
+English: Changed: Rebuilt electron/auth/auth-service.ts so it now prefers the configured remote auth API for login, register, activation, invite, reward, and heartbeat, persists a session token in userData/auth-shell.json, and falls back to the existing local mock/local-host flow only when the remote endpoint is unavailable.
+中文：改动：重写了 electron/auth/auth-service.ts，让它在配置了远端授权 API 后优先处理登录、注册、授权码、邀请码、奖励码和心跳，并把 session token 持久化到 userData/auth-shell.json；只有在远端不可达时才回退到原有本地 mock / 本地主机链路。
+
+English: Changed: Updated src/App.tsx so forgot-password no longer tries to send reset mail and instead immediately shows the placeholder notice `当前未配置当前功能，敬请期待。`.
+中文：改动：更新了 src/App.tsx，让忘记密码不再尝试发送重置邮件，而是直接提示 `当前未配置当前功能，敬请期待。`。
+
+English: Validation: `npm run typecheck`, `npm run build:electron`, and `npm run build:renderer` all passed after the auth-service rewrite and the forgot-password client adjustment.
+中文：验证：在授权服务重写和忘记密码客户端调整后，`npm run typecheck`、`npm run build:electron` 和 `npm run build:renderer` 都已通过。
+
+English: Failure: A full-file apply_patch attempt on electron/auth/auth-service.ts exceeded the Windows command-length limit in this workspace, so the file had to be recreated and written back in smaller apply_patch chunks.
+中文：失败：在这个工作区里，对 electron/auth/auth-service.ts 做整文件 apply_patch 时触发了 Windows 命令长度限制，所以最后改成删除后分段用更小的 apply_patch 补回。
+
+English: Fix or conclusion: For large TypeScript service rewrites in this repository, if apply_patch hits the command-length ceiling, keep using apply_patch but split the file into smaller chunks instead of abandoning the scoped rewrite.
+中文：修复或结论：在这个仓库里，如果大体量 TypeScript 服务改造触发 apply_patch 的命令长度上限，仍然应该坚持用 apply_patch，但把文件拆成更小的分段来落盘，而不是放弃这次限定范围内的重写。
+
+English: Avoid next time: Do not tie the client forgot-password button to Resend availability. The correct short-term behavior is a clear placeholder message until the mail service is truly configured.
+中文：下次避免：不要把客户端的忘记密码按钮和 Resend 是否配置绑死。短期内正确行为是明确提示“当前未配置当前功能，敬请期待”，等邮件服务真的配好后再接回去。
+
+English: Task: Finish the packaging, uninstall, README, and handoff batch by validating the latest Windows build, making the uninstall flow preserve-or-delete local data, clarifying the current cloud-auth state, and writing a clear desktop audit document based on the original prompt file.
+中文：任务：完成打包、卸载、README 与接力说明这一批，验证最新 Windows 构建、补齐卸载时保留或删除本地数据的流程、说明当前云端授权现状，并基于最早提示词写一份清晰的桌面审计文档。
+
+English: Request: Keep this batch focused on the screenshot-related update notice cleanup, packaging/install usability, uninstall behavior, README status, GitHub sync, and a clear “what is done vs not done” handoff file for the next session. Do not expand into unrelated UI redesign or auth-rule rewrites.
+中文：要求：本批只处理截图相关的更新提示清理、打包/安装可用性、卸载行为、README 状态、GitHub 同步，以及给下次会话的清晰“已完成/未完成”接力文档；不要扩展到无关 UI 重做或授权规则重写。
+
+English: Changed: Hid the intrusive inline update notice in src/App.tsx, added NSIS uninstall hooks through build/installer-hooks.nsh and package.json, kept the packaged auth service pointing to the Workers URL by default, refreshed README.md, and created a desktop audit document at C:\Users\Mr.Chen\Desktop\源码分析备份\GPT回复\登录切换器_总任务完成度与运行说明_2026-03-18.md.
+中文：改动：在 src/App.tsx 里隐藏了干扰界面的内联更新提示，通过 build/installer-hooks.nsh 和 package.json 增加了 NSIS 卸载钩子，保留了打包版默认指向 Workers 授权地址的设置，刷新了 README.md，并在 C:\Users\Mr.Chen\Desktop\源码分析备份\GPT回复\登录切换器_总任务完成度与运行说明_2026-03-18.md 生成了桌面审计说明。
+
+English: Validation: npm run typecheck, npm run build:electron, and npm run build:renderer all passed; the latest win-unpacked Auth API Switcher.exe stayed alive when tested without an existing dev instance, and the earlier quick exit was confirmed to be caused by the app single-instance lock rather than a broken packaged build.
+中文：验证：npm run typecheck、npm run build:electron 和 npm run build:renderer 均已通过；最新 win-unpacked 的 Auth API Switcher.exe 在没有现有开发实例时能保持运行，之前的快速退出已经确认是应用单实例锁导致，而不是打包版损坏。
+
+English: Failure: A first “launch test” falsely suggested the packaged build was broken because it was executed while multiple dev Electron instances from the same project were already running, so the packaged process exited immediately after hitting the single-instance guard.
+中文：失败：第一次“启动测试”误以为打包版坏了，实际是当时同一项目已经有多个开发态 Electron 实例在运行，打包进程命中单实例保护后立刻退出了。
+
+English: Fix or conclusion: When testing packaged Electron builds in this repository, always exclude single-instance conflicts first. Stop the current dev instances or test on a clean machine before concluding that the installer or unpacked build is broken.
+中文：修复或结论：在这个仓库测试打包版 Electron 时，必须先排除单实例冲突。应先停掉当前开发实例，或在干净机器上测试，再判断安装包或目录版是否真的损坏。
+
+English: Avoid next time: For handoff-quality batches, produce a desktop audit file that explicitly states current architecture, run commands, real completion status, remaining blockers, and the rules the next session must obey. This reduces repeated analysis and helps prevent scope drift or accidental deletions.
+中文：下次避免：凡是这种需要接力的新会话批次，都应生成一份桌面审计文档，明确当前架构、运行命令、真实完成状态、剩余阻塞点，以及下次会话必须遵守的规则。这样可以减少重复分析，也能降低范围漂移和误删风险。
