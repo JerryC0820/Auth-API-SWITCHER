@@ -2502,3 +2502,6 @@ English: Fix or conclusion: When testing packaged Electron builds in this reposi
 
 English: Avoid next time: For handoff-quality batches, produce a desktop audit file that explicitly states current architecture, run commands, real completion status, remaining blockers, and the rules the next session must obey. This reduces repeated analysis and helps prevent scope drift or accidental deletions.
 中文：下次避免：凡是这种需要接力的新会话批次，都应生成一份桌面审计文档，明确当前架构、运行命令、真实完成状态、剩余阻塞点，以及下次会话必须遵守的规则。这样可以减少重复分析，也能降低范围漂移和误删风险。
+
+English: Sync note: The README, uninstall hook, auth-service remote default, update-notice cleanup, and related records were pushed to GitHub origin/master in commit `b202734`.
+中文：同步说明：README、卸载钩子、auth-service 远端默认地址、更新提示清理以及相关记录，已在提交 `b202734` 中推送到 GitHub 的 origin/master。

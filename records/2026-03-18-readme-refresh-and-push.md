@@ -30,13 +30,13 @@ Summary:
 Summary:
 - Refreshed README so the cloud-auth status, uninstall behavior, and Resend dependency are described accurately for the current codebase.
 - Added a clearer desktop handoff/audit markdown under the GPT回复 backup folder, aligned to the original prompt file and current implementation state.
-- Prepared this batch for GitHub sync, without including screenshot, zip, or reference folders.
+- Pushed this batch to GitHub commit `b202734`, without including screenshot, zip, or reference folders.
 修改摘要：
 - 刷新了 README，使当前代码里的云端授权状态、卸载行为和 Resend 依赖现状描述准确。
 - 在 GPT回复 备份目录新增了更清晰的接力/审计说明文档，对齐最早提示词和当前实现状态。
-- 为本批 GitHub 同步整理好了文件范围，没有把截图、zip 或参考目录带上。
+- 已把本批推送到 GitHub 提交 `b202734`，且没有把截图、zip 或参考目录带上。
 
 Sync status:
-Sync status: Prepared for GitHub push in this batch.
+Sync status: Pushed to GitHub on origin/master in commit b202734.
 同步状态：
-同步状态：本批已整理为可直接推送到 GitHub 的状态。
+同步状态：已在本批推送到 GitHub 的 origin/master，提交号 b202734。
