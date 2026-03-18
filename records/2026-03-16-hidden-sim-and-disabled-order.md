@@ -1,0 +1,11 @@
+# 2026-03-16 hidden-sim-and-disabled-order
+- Start time: 2026-03-16 11:00:11
+- End time: 2026-03-16 11:38:49
+- Total time: 00:38:38
+- Modified files:
+  - src/App.tsx
+- Summary:
+  - Decoupled simulated cards from the hidden-mode lock so re-hiding the special-feature panel no longer removes already-enabled simulated cards.
+  - Reordered displayProfiles so normal real cards appear first, simulated cards stay in the middle, and manually disabled real cards always sink to the very end.
+  - Updated the special-feature panel copy to match the new behavior.
+- Sync status: not synced

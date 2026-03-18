@@ -1,0 +1,12 @@
+# 2026-03-14 add profile dialog code html transplant
+- Start time: 2026-03-14 16:19:15
+- End time: 2026-03-14 16:28:28
+- Total time: 00:09:13
+- Modified files:
+  - src/components/AddProfileDialog.tsx
+  - src/components/add-profile-dialog-stitch.css
+- Summary:
+  - Replaced the previous AddProfileDialog JSX with a direct React transplant of the DOM hierarchy from stitch (2)/code.html.
+  - Moved the original code.html style block into a dedicated component CSS file and added only the minimum fixed-size, overlay, and desktop-layout overrides needed to match the screenshot shell in the app.
+  - Rewired the existing form logic only onto the transplanted nodes: name/notes value binding, team/personal mode switching, auth file picking, status/quota text display, and save submit flow.
+- Sync status: not synced

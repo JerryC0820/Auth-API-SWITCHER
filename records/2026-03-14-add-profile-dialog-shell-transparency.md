@@ -1,0 +1,11 @@
+# 2026-03-14 add profile dialog shell transparency
+- Start time: 2026-03-14 16:39:57
+- End time: 2026-03-14 16:42:51
+- Total time: 00:02:54
+- Modified files:
+  - src/components/add-profile-dialog-stitch.css
+- Summary:
+  - Further reduced the overlay and modal-shell opacity so the app background comes through more strongly behind the dialog.
+  - Made the shell layers outside the inner function cards translucent as well by adjusting the main glass panel plus the header, main body, and footer backgrounds, while keeping the inner cards relatively stable.
+  - Verified the result visually in the local browser-rendered dialog and reran TypeScript no-emit validation after the CSS-only change.
+- Sync status: not synced

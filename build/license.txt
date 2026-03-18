@@ -1,0 +1,4 @@
+Auth API Switcher
+
+Temporary placeholder license file.
+Replace build/license.txt with your final EULA or license text before release.

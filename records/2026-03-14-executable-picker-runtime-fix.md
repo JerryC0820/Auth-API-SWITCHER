@@ -1,0 +1,12 @@
+# 2026-03-14 executable picker runtime fix
+- Start time: 2026-03-14 19:03:45
+- End time: 2026-03-14 19:10:22
+- Total time: 00:06:37
+- Modified files:
+  - src/App.tsx
+  - electron/profile-service.ts
+- Summary:
+  - Added a renderer-side fallback around chooseExecutableFile so stale runtime windows no longer throw a raw "is not a function" error when the executable picker is clicked.
+  - Relaxed Codex / Trae executable resolution so manual overrides and running-process executable paths are accepted without fs.pathExists blocking WindowsApps installs.
+  - Relaxed desktop restart gating so the restart flow now skips only when the executable path is truly empty, instead of rejecting WindowsApps paths before spawn is attempted.
+- Sync status: not synced

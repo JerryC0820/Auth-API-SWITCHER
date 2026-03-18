@@ -1,0 +1,12 @@
+# 2026-03-14 local simulation mode cards
+- Start time: 2026-03-14 18:57:10
+- End time: 2026-03-14 19:01:04
+- Total time: 00:03:54
+- Modified files:
+  - src/App.tsx
+  - src/shell.css
+- Summary:
+  - Added a dev-only local simulation mode in the right settings panel with an enable switch and card-count input.
+  - Appended randomized temporary profile cards after the real cards without writing any backend files or persisted settings.
+  - Blocked real switch/edit/delete/open-directory actions on simulated cards and kept them as visual-only local preview data.
+- Sync status: not synced

@@ -1,0 +1,15 @@
+# 2026-03-16 plan-type-english-slider
+- Start time: 2026-03-16 01:00:00
+- End time: 2026-03-16 01:12:20
+- Total time: 00:12:20
+- Modified files:
+  - shared/types.ts
+  - electron/profile-service.ts
+  - src/App.tsx
+  - src/components/AddProfileDialog.tsx
+  - src/components/add-profile-dialog-stitch.css
+- Summary:
+  - Replaced the edit-space Team/Personal toggle with a horizontal English plan selector showing Free / Plus / Pro / Team / Bussiness.
+  - Wired the save path to accept Pro and Business, and normalized legacy Enterprise values back into Business compatibility.
+  - Kept the change limited to the plan selector area and the necessary type/storage mappings.
+- Sync status: not synced

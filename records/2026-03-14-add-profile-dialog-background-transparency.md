@@ -1,0 +1,12 @@
+# 2026-03-14 add profile dialog background transparency
+- Start time: 2026-03-14 16:32:21
+- End time: 2026-03-14 16:35:05
+- Total time: 00:02:44
+- Modified files:
+  - src/components/add-profile-dialog-stitch.css
+- Summary:
+  - Reduced the modal overlay opacity so the app background remains visible behind the dialog instead of being covered by an almost solid black mask.
+  - Lowered the glass-panel and card background alpha values and restored stronger blur on the modal shell so the dialog itself reads as semi-transparent glass rather than an opaque dark slab.
+  - Kept the dialog DOM, layout, button positions, and form logic untouched.
+  - Rechecked the result visually in the local browser dialog and reran TypeScript no-emit validation after the CSS-only change.
+- Sync status: not synced

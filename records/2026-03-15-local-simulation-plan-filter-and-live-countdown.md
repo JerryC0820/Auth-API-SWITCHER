@@ -1,0 +1,11 @@
+# 2026-03-15 local simulation plan filter and live countdown
+- Start time: 2026-03-15 22:05:17
+- End time: 2026-03-15 22:13:35
+- Total time: 00:08:18
+- Modified files:
+  - src/App.tsx
+- Summary:
+  - Added simulation-only plan selection for Free / Plus / Pro / Team / Business so unchecked simulated plan types no longer appear in generated cards.
+  - Changed simulated five-hour and weekly quotas to stay at full remaining capacity while still showing live countdowns.
+  - Reworked simulated resetAt generation into rolling cycle timestamps so countdowns keep moving and roll to the next reset window instead of sticking on "即将刷新".
+- Sync status: not synced

@@ -1,0 +1,12 @@
+# 2026-03-16 restart-app-wait-pid-fix
+- Start time: 2026-03-16 11:02:02
+- End time: 2026-03-16 11:09:51
+- Total time: 00:07:49
+- Modified files:
+  - electron/main.ts
+  - scripts/restart-dev.ps1
+- Summary:
+  - Passed the current Electron PID into the dev restart script.
+  - Made the restart script wait for the old app PID to exit before cleaning project processes and starting a fresh npm run dev.
+  - Verified the handoff by restarting with a target PID and confirming a new Codex Workspace Switcher window came back.
+- Sync status: not synced

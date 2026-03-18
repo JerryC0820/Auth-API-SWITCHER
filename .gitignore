@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-electron
+release
+release-artifacts
+*.log
+App_Backup/
+workers/auth-api/.wrangler/
+workers/auth-api/.dev.vars
+workers/auth-api/.dev.vars.*
+!workers/auth-api/.dev.vars.example

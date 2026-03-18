@@ -1,0 +1,12 @@
+# 2026-03-14 settings panel collapse toggle
+- Start time: 2026-03-14 17:40:02
+- End time: 2026-03-14 17:46:44
+- Total time: 00:06:42
+- Modified files:
+  - src/App.tsx
+  - src/shell.css
+- Summary:
+  - Changed the header settings button from a root-directory picker into a toggle for the right-side parameter panel.
+  - Moved the root-directory action into the panel itself and kept its busy feedback there.
+  - Added a right-collapse state for the sidebar and tightened panel spacing to reduce scrollbar pressure in windowed mode.
+- Sync status: not synced

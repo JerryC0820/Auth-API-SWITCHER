@@ -1,0 +1,11 @@
+# 2026-03-14 add profile dialog spacing fit
+- Start time: 2026-03-14 16:37:20
+- End time: 2026-03-14 16:39:57
+- Total time: 00:02:37
+- Modified files:
+  - src/components/add-profile-dialog-stitch.css
+- Summary:
+  - Tightened the dialog header, main, footer, card paddings, and vertical gaps to reclaim usable height inside the modal.
+  - Reduced left and right card minimum heights plus the notes area height so the center content fits within the modal without relying on the right-side scrollbar in the current window size.
+  - Verified the result visually in the local browser-rendered dialog and reran TypeScript no-emit validation after the CSS-only change.
+- Sync status: not synced
