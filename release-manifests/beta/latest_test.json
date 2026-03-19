@@ -1,14 +1,14 @@
 {
   "appId": "com.jerryc0820.auth-api-switcher",
-  "channel": "stable",
+  "channel": "beta",
   "version": "0.1.3",
   "minSupportedVersion": "0.1.3",
   "mandatory": false,
-  "releaseTime": "2026-03-19T08:16:14.444Z",
-  "notes": "Release 0.1.3",
-  "notesUrl": "https://raw.githubusercontent.com/JerryC0820/Auth-API-SWITCHER/master/release-notes/0.1.3.md",
+  "releaseTime": "2026-03-19T08:16:14.464Z",
+  "notes": "Test Release 0.1.3",
+  "notesUrl": "https://raw.githubusercontent.com/JerryC0820/Auth-API-SWITCHER/master/release-notes/0.1.3_test.md",
   "sha256": "93f4f58803ceb6d1e484d3ae350e4cc85e24f63c1dc51d10b63e4c7b11c2d285",
-  "signature": "8rZ0L5aS4og7aj3dS7vifJv+d13lI8AySNKN6iQsB9/DowBAlaEg6DAzUKBx/P7V+igZGDE+mbv1OTRKsu6DCw==",
+  "signature": "T68pKzPVo0sxxrhPmAyQ7hMCzv7cFkm6LkXJKengPfG1KHG57PaknSZ1x+5QvyaEexXdlWSA81T+63BKh5vcCA==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v0.1.3",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER"
