@@ -1,23 +1,23 @@
 {
   "appId": "com.jerryc0820.auth-api-switcher",
   "channel": "stable",
-  "version": "0.1.5",
-  "minSupportedVersion": "0.1.5",
+  "version": "0.1.9",
+  "minSupportedVersion": "0.1.9",
   "mandatory": false,
-  "releaseTime": "2026-03-19T11:54:54.243Z",
-  "notes": "Release 0.1.5",
-  "notesUrl": "https://raw.githubusercontent.com/JerryC0820/Auth-API-SWITCHER/master/release-notes/0.1.5.md",
-  "sha256": "d55eaad0dd1debf2087c2bc89a4cb5f75c60ae977f4129b571040c078cef4f9c",
-  "signature": "D1D1lo7XRHnF+jsifDSoCGvVuRNTPqh2ziGeCWFu/3jyq/qUSsPfBOc0RyQ82brwKJvbM/d7emTFX98VRNmVCw==",
+  "releaseTime": "2026-03-20T07:00:17.496Z",
+  "notes": "Release 0.1.9",
+  "notesUrl": "https://raw.githubusercontent.com/JerryC0820/Auth-API-SWITCHER/master/release-notes/0.1.9.md",
+  "sha256": "90c3103f82236e0da8325f82301e0c9d4ad42611cc4797a423462c23c3d52350",
+  "signature": "nx3o3RG+eu+bIhpEfiMWMLEqLrpOx5Nt/VQroxq7E0AMGCkt2lqVX84yUKIkPTf21QV7ZHsYoWupf0QADTYbAQ==",
   "mirrors": {
-    "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v0.1.5",
+    "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v0.1.9",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
   },
   "platforms": {
     "win": {
-      "installerUrl": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v0.1.5/Auth.API.Switcher-0.1.5-win-x64.exe",
+      "installerUrl": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v0.1.9/Auth.API.Switcher-0.1.9-win-x64.exe",
       "alternateUrls": [
-        "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v0.1.5/Auth.API.Switcher-0.1.5-win-x64.exe"
+        "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v0.1.9/Auth.API.Switcher-0.1.9-win-x64.exe"
       ],
       "portableUrl": null
     }
