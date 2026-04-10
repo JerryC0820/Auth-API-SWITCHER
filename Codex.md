@@ -36,3 +36,21 @@ English: Failure: The original local release mirror was stale and not pushable f
 
 English: Avoid next time: If the public release repo rejects a push because remote `master` is ahead, refresh from the remote head first and patch only the true diff instead of replaying a stale local mirror blindly.
 中文：下次避免：如果公开发布仓因为远端 `master` 更靠前而拒绝推送，应先从远端头部刷新，再只补真实差异，不要盲目重放一份已经陈旧的本地镜像。
+
+English: Task: Expand the public README into a screenshot gallery for stable 1.0.3.
+中文：任务：把公开发布仓 README 扩展成 stable 1.0.3 的截图画廊版本。
+
+English: Request: Use all provided screenshots, emphasize support chat, cloud sync, and switch animation, and make the release-facing README descriptive enough to stand on its own.
+中文：要求：使用全部已提供截图，重点突出客服聊天、云同步和切换动画，并让发布侧 README 自身就能把这些功能说明白。
+
+English: Changed: Added the screenshot gallery section to the release-facing README, grouped the 13 screenshots by workflow, and prepared the same screenshot asset folder for the release repo so remote rendering will match the source repo.
+中文：改动：给发布侧 README 新增了截图画廊章节，把 13 张截图按工作流分组展示，并准备把同一套截图资源加入发布仓，确保远端显示效果和源码仓一致。
+
+English: Validation: Checked the provided screenshots locally before writing the captions and kept the README image paths relative to the repo root, which lets the same markdown layout render in GitHub and Gitee once the assets are committed.
+中文：验证：在写说明前先本地核对了截图内容，并把 README 的图片路径保持为仓库根目录相对路径；这样只要图片入库，GitHub 和 Gitee 都能直接渲染同一版版式。
+
+English: Failure: The fresh release clone had no screenshot assets yet, so the README update had to include the image-folder sync as part of the same delivery rather than assuming the files already existed remotely.
+中文：失败：新的发布仓克隆里一开始没有任何截图资源，所以这次 README 更新必须把图片目录同步一起完成，不能假设远端已经有这些文件。
+
+English: Avoid next time: Any release-facing README change that embeds screenshots should be treated as docs plus asset sync together, otherwise the markdown can be correct while the rendered page is still broken.
+中文：下次避免：凡是发布侧 README 嵌入截图的改动，都要把“文档更新 + 资源同步”视为一个整体任务；否则 markdown 虽然写对了，页面渲染仍然会坏。
