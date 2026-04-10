@@ -2,7 +2,7 @@ Start: 2026-04-10 20:37:29 +08:00
 Task: public release README 1.0.3 sync
 Request: Update the public release repo README so the latest stable 1.0.3 highlights cover support chat, card transfer, cloud sync, and related user-facing improvements; add the missing Codex/record scaffolding required by the repo rules.
 Scope: Release-facing docs only: README.md, Codex.md, and this record. The remote release repo already carries the 1.0.3 manifest and release note, so those are intentionally left unchanged in this sync step.
-Status: In progress
+Status: Completed
 
 ## Summary / 摘要
 
@@ -30,7 +30,7 @@ Failure
 - The original local release mirror was stale and could not be pushed fast-forward because the remote branch was ahead.
 
 Sync status
-- Prepared for commit and push to `origin` and `gitee` from this fresh remote clone.
+- Committed and pushed to `origin` and `gitee` from this fresh remote clone.
 
 ## Code-Level Change Ledger / 代码级修改台账
 
@@ -94,5 +94,5 @@ Sync status
 - Removed code: none
 - Rollback action: delete this file if the user explicitly requests record cleanup
 
-End: 2026-04-10 20:37:29 +08:00
-Elapsed: 00:00:00
+End: 2026-04-10 20:39:34 +08:00
+Elapsed: 00:02:05
