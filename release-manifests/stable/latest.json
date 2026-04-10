@@ -4,11 +4,11 @@
   "version": "1.0.3",
   "minSupportedVersion": "1.0.3",
   "mandatory": false,
-  "releaseTime": "2026-04-10T08:46:39.865Z",
+  "releaseTime": "2026-04-10T11:48:52.799Z",
   "notes": "Release 1.0.3",
   "notesUrl": "https://raw.githubusercontent.com/JerryC0820/Auth-API-SWITCHER/master/release-notes/1.0.3.md",
-  "sha256": "d597cff480afd2e6bb97bbf4eab302fb1353d2a2891093c33fefd2ee078eee97",
-  "signature": "86I4/5xPKras5RRGvxa2zSpuq4X5TjQYdljwGXqYXAoN6WeWeIo0cKvLhOFtqKiFL8TTC4JjUnf8RNZlG+DNAg==",
+  "sha256": "5f6ec12bfefe16a1625e4a9900ffb37bc65376dc71e84d4c14c9a861e94daf17",
+  "signature": "XBHoFn+8Mj5qCbIEiJU4f4GKx+tA2QZ5Vh1wOVnu2vGzRxDyiGYe6bEwbz3YHksu4mwNaKqbLeptnFITvhAHCA==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v1.0.3",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
