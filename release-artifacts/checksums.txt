@@ -1,1 +1,1 @@
-5f6ec12bfefe16a1625e4a9900ffb37bc65376dc71e84d4c14c9a861e94daf17  release-artifacts/win/Auth.API.Switcher-1.0.3-win-x64.exe
+5c112eb392d9dca03c0aaba78bef6a96275e8934738fd0e376b41a050aa433e0  release-artifacts/win/Auth.API.Switcher-1.0.5-win-x64.exe
