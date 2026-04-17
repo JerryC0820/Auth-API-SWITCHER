@@ -1,8 +1,8 @@
-version: 1.0.7
+version: 1.0.9
 files:
-  - url: Auth.API.Switcher-1.0.7-win-x64.exe
-    sha512: BR3sQkOt6ebHUkcUfJDAREik90H81klkMLrVxs+WKvK5toKRlFJMj9wL5l3UXpo05bYGVHV4dCK3ugG5JrItdg==
-    size: 104593952
-path: Auth.API.Switcher-1.0.7-win-x64.exe
-sha512: BR3sQkOt6ebHUkcUfJDAREik90H81klkMLrVxs+WKvK5toKRlFJMj9wL5l3UXpo05bYGVHV4dCK3ugG5JrItdg==
-releaseDate: '2026-04-16T04:41:59.457Z'
+  - url: Auth.API.Switcher-1.0.9-win-x64.exe
+    sha512: 4jFkkSHxAqD/KiqnrGdwSUegEph/P+vVbJBPt/Vqq3pc+nsGiJMZ7wzxtZDCWPDvXl76X+7i/LP3TVUFnAs9Fg==
+    size: 105804442
+path: Auth.API.Switcher-1.0.9-win-x64.exe
+sha512: 4jFkkSHxAqD/KiqnrGdwSUegEph/P+vVbJBPt/Vqq3pc+nsGiJMZ7wzxtZDCWPDvXl76X+7i/LP3TVUFnAs9Fg==
+releaseDate: '2026-04-17T08:44:40.480Z'
