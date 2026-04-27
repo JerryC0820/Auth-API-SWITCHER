@@ -8,14 +8,14 @@
   "notes": "Release 2.0.1",
   "notesUrl": "https://dl.ainivox.cn/release-notes/2.0.1.md",
   "sha256": "0cb030e38b5d48a609ee6db5cc6cac98883349c11fa21db3966fd9830fb4c1bf",
-  "signature": "Os6pla7Lgdu6B/h0+mRQnYVShYI+I9tBSsv6aN0lB1SzrPUskUSVXYOPd+A3Y33YC/vOAYiCpYQb6wrp5TGyAA==",
+  "signature": "2KEPlRbXslId5K93b7wZ1tGciqMsHDBw7hPHeXakF2dfHGp6zvkpG4xnVYCeDQK1/vtVuvHXTOqmLP/SkOW9DQ==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.0.1",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
   },
   "platforms": {
     "win": {
-      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.0.1/Auth.API.Switcher-2.0.1-win-x64.exe",
+      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.0.1/Auth.API.Switcher-2.0.1-win-x64.exe?build=20260427-201",
       "alternateUrls": [
         "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.0.1/Auth.API.Switcher-2.0.1-win-x64.exe",
         "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.0.1/Auth.API.Switcher-2.0.1-win-x64.exe"
