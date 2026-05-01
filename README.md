@@ -16,6 +16,11 @@
 </div>
 
 <div align="center">
+  官网直达：
+  <a href="https://www.ainivox.cn">https://www.ainivox.cn</a>
+</div>
+
+<div align="center">
   <a href="#-最新稳定版-103-亮点">最新亮点</a> ·
   <a href="#-界面预览">界面预览</a> ·
   <a href="#-核心能力">核心能力</a> ·
