@@ -1,14 +1,14 @@
 {
-  "appId": "codex-workspace-switcher",
+  "appId": "com.jerryc0820.auth-api-switcher",
   "channel": "stable",
   "version": "2.0.9",
   "minSupportedVersion": "2.0.9",
   "mandatory": false,
-  "releaseTime": "2026-05-12T18:36:07.265Z",
+  "releaseTime": "2026-05-12T18:41:33.110Z",
   "notes": "Release 2.0.9",
   "notesUrl": "https://dl.ainivox.cn/release-notes/2.0.9.md",
   "sha256": "3f91d2fd715fe484b354adcdfcdc53ff6c68c69e7eb6125a3920e48afc638a44",
-  "signature": "uQybzYqL1oLOsvnC0ts2VpssNQrfsZ/NxVONYqunLjcD9zZolW9Wh3sDFJiDhRHRyluji4h2g01Oo1AT/Xw+Dg==",
+  "signature": "WZr0piLXUHc+RnlkWtl5+2mX7sFfXjb5+rBmLiTEAfFVdJWCZIOxPAxFTYbmz9ErdCvHtbfPViCmz3WRSyLFCg==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.0.9",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
