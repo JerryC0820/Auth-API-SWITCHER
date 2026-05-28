@@ -1,2 +1,2 @@
-76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4  release-artifacts/win/Auth.API.Switcher-2.1.5-win-x64.exe
-8d00ac932baf47ed95a7d7f2398bdd2cb14012b546c35aa732b134a69a8c896b  release-artifacts/win-local-fast/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe
+d62188f08565757d1333cb5bc12dc5bd439b6e70487336d230553186d03998b0  release-artifacts/win/Auth.API.Switcher-2.1.5-win-x64.exe
+6143cbc164a9dc26756dd4bdb0970e25d850fdee600c7cfad42c3332cdf599fa  release-artifacts/win-local-fast/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe

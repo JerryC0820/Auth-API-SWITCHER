@@ -4,11 +4,11 @@
   "version": "2.1.5",
   "minSupportedVersion": "2.1.5",
   "mandatory": false,
-  "releaseTime": "2026-05-28T17:53:02.998Z",
+  "releaseTime": "2026-05-28T18:28:01.787Z",
   "notes": "Release 2.1.5",
   "notesUrl": "https://dl.ainivox.cn/release-notes/2.1.5.md",
-  "sha256": "76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4",
-  "signature": "vj/Fv8hrrK2TFg7s4cIOUjhyEmqTyce4JKqZCMbUT9sa6EmB5AvPsySqPH/+UQ284ghCGXJDLj6Xi65vavu8Ag==",
+  "sha256": "d62188f08565757d1333cb5bc12dc5bd439b6e70487336d230553186d03998b0",
+  "signature": "IfnNt2uH7aLM7HYQ7HLNh95HzezbZW6FWAYOj9ChJL/LaDcJ39aFp/O2dQd3r0sjwBdm4CN/6fFpageMS90QAQ==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.1.5",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
@@ -19,68 +19,56 @@
       "platform": "windows-x64",
       "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe",
       "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe",
-      "alternateUrls": [
-        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe"
-      ],
+      "alternateUrls": [],
       "fileName": "Auth.API.Switcher-2.1.5-win-x64.exe",
-      "fileSize": 105302280,
-      "sha256": "76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4",
-      "sha512": "CcSKsQ7cGNfOn2w5kvkQGniizCMVj/GoQUsoT6hIqIA99N4XozsnyKWrvipRXADD3rR+xOowPiht1M84vxRLzg=="
+      "fileSize": 105354956,
+      "sha256": "d62188f08565757d1333cb5bc12dc5bd439b6e70487336d230553186d03998b0",
+      "sha512": "ucympIf8pHpmtYx4ugGGJkxaWkZ8g1Z/WcTFax0n9xfS3N2tDvsSPSCg0C9wsCdcZaOCJfAybKBvlfC/JtOBpA=="
     },
     "localFast": {
       "label": "本地极速版",
       "platform": "windows-x64-local-fast",
       "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
       "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-      "alternateUrls": [
-        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe"
-      ],
+      "alternateUrls": [],
       "fileName": "Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-      "fileSize": 105357700,
-      "sha256": "8d00ac932baf47ed95a7d7f2398bdd2cb14012b546c35aa732b134a69a8c896b",
-      "sha512": "PuvpjwXDy6+NaYZASZAZv9uJsGU5Wf6Gs98KugDW3QAscmSBAnX26y3dukqhzkW2QVTzNQ2fWct6BdAl31j/sw=="
+      "fileSize": 105355307,
+      "sha256": "6143cbc164a9dc26756dd4bdb0970e25d850fdee600c7cfad42c3332cdf599fa",
+      "sha512": "mjnVMm8MgCf1NDQWTSW9OW+iP++50ANFb6lbeGQeT1yoRyPD5oYFyM8EMMok6j5iybERoOYPfg/qIQ6epf4IGg=="
     }
   },
   "platforms": {
     "win": {
       "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe",
       "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe",
-      "alternateUrls": [
-        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe"
-      ],
-      "fileSize": 105302280,
-      "sha512": "CcSKsQ7cGNfOn2w5kvkQGniizCMVj/GoQUsoT6hIqIA99N4XozsnyKWrvipRXADD3rR+xOowPiht1M84vxRLzg==",
+      "alternateUrls": [],
+      "fileSize": 105354956,
+      "sha512": "ucympIf8pHpmtYx4ugGGJkxaWkZ8g1Z/WcTFax0n9xfS3N2tDvsSPSCg0C9wsCdcZaOCJfAybKBvlfC/JtOBpA==",
       "localFastInstallerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-      "localFastAlternateUrls": [
-        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe"
-      ],
-      "localFastFileSize": 105357700,
+      "localFastAlternateUrls": [],
+      "localFastFileSize": 105355307,
       "editions": {
         "standard": {
           "label": "云同步版",
           "platform": "windows-x64",
           "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe",
           "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe",
-          "alternateUrls": [
-            "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe"
-          ],
+          "alternateUrls": [],
           "fileName": "Auth.API.Switcher-2.1.5-win-x64.exe",
-          "fileSize": 105302280,
-          "sha256": "76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4",
-          "sha512": "CcSKsQ7cGNfOn2w5kvkQGniizCMVj/GoQUsoT6hIqIA99N4XozsnyKWrvipRXADD3rR+xOowPiht1M84vxRLzg=="
+          "fileSize": 105354956,
+          "sha256": "d62188f08565757d1333cb5bc12dc5bd439b6e70487336d230553186d03998b0",
+          "sha512": "ucympIf8pHpmtYx4ugGGJkxaWkZ8g1Z/WcTFax0n9xfS3N2tDvsSPSCg0C9wsCdcZaOCJfAybKBvlfC/JtOBpA=="
         },
         "localFast": {
           "label": "本地极速版",
           "platform": "windows-x64-local-fast",
           "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
           "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-          "alternateUrls": [
-            "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe"
-          ],
+          "alternateUrls": [],
           "fileName": "Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-          "fileSize": 105357700,
-          "sha256": "8d00ac932baf47ed95a7d7f2398bdd2cb14012b546c35aa732b134a69a8c896b",
-          "sha512": "PuvpjwXDy6+NaYZASZAZv9uJsGU5Wf6Gs98KugDW3QAscmSBAnX26y3dukqhzkW2QVTzNQ2fWct6BdAl31j/sw=="
+          "fileSize": 105355307,
+          "sha256": "6143cbc164a9dc26756dd4bdb0970e25d850fdee600c7cfad42c3332cdf599fa",
+          "sha512": "mjnVMm8MgCf1NDQWTSW9OW+iP++50ANFb6lbeGQeT1yoRyPD5oYFyM8EMMok6j5iybERoOYPfg/qIQ6epf4IGg=="
         }
       },
       "portableUrl": null
