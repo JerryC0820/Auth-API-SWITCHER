@@ -4,11 +4,11 @@
   "version": "2.1.5",
   "minSupportedVersion": "2.1.5",
   "mandatory": false,
-  "releaseTime": "2026-05-28T16:17:37.922Z",
+  "releaseTime": "2026-05-28T17:53:02.998Z",
   "notes": "Release 2.1.5",
   "notesUrl": "https://dl.ainivox.cn/release-notes/2.1.5.md",
-  "sha256": "7dce0bbdced1fac4bf246cc726c6dd8364dd0611c5571e3728159024f49b6849",
-  "signature": "S+bF7Bxoe52ILEBRWNaYXHqv1XDiPFDLSrlPcS/CmrlDorF32NvLYqCG857KcqtQcmWMObYMbC2lWE6LFFCZAg==",
+  "sha256": "76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4",
+  "signature": "vj/Fv8hrrK2TFg7s4cIOUjhyEmqTyce4JKqZCMbUT9sa6EmB5AvPsySqPH/+UQ284ghCGXJDLj6Xi65vavu8Ag==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.1.5",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
@@ -23,9 +23,9 @@
         "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe"
       ],
       "fileName": "Auth.API.Switcher-2.1.5-win-x64.exe",
-      "fileSize": 105356904,
-      "sha256": "7dce0bbdced1fac4bf246cc726c6dd8364dd0611c5571e3728159024f49b6849",
-      "sha512": "5tiy1CLLyuODELXfC3KkND1mSKCI2DUlupXqtGBvIqeK2YVfmyNIT8yt5NypzHM9zk1GWtYZkci3ubkTKe41sw=="
+      "fileSize": 105302280,
+      "sha256": "76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4",
+      "sha512": "CcSKsQ7cGNfOn2w5kvkQGniizCMVj/GoQUsoT6hIqIA99N4XozsnyKWrvipRXADD3rR+xOowPiht1M84vxRLzg=="
     },
     "localFast": {
       "label": "本地极速版",
@@ -36,9 +36,9 @@
         "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe"
       ],
       "fileName": "Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-      "fileSize": 105301707,
-      "sha256": "041fe0c5231170d3731183fca85576ac92122cecb9e15a6daf0c2eb587879797",
-      "sha512": "0Kh54pcMIkfSj/UNvmHoVwAABqAy8J5zPFcrPFzmiYYRcO4vuAG2h9/Kg+ZdjBOaAXKbl1A4WsoGTuxUxBjDzA=="
+      "fileSize": 105357700,
+      "sha256": "8d00ac932baf47ed95a7d7f2398bdd2cb14012b546c35aa732b134a69a8c896b",
+      "sha512": "PuvpjwXDy6+NaYZASZAZv9uJsGU5Wf6Gs98KugDW3QAscmSBAnX26y3dukqhzkW2QVTzNQ2fWct6BdAl31j/sw=="
     }
   },
   "platforms": {
@@ -48,13 +48,13 @@
       "alternateUrls": [
         "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe"
       ],
-      "fileSize": 105356904,
-      "sha512": "5tiy1CLLyuODELXfC3KkND1mSKCI2DUlupXqtGBvIqeK2YVfmyNIT8yt5NypzHM9zk1GWtYZkci3ubkTKe41sw==",
+      "fileSize": 105302280,
+      "sha512": "CcSKsQ7cGNfOn2w5kvkQGniizCMVj/GoQUsoT6hIqIA99N4XozsnyKWrvipRXADD3rR+xOowPiht1M84vxRLzg==",
       "localFastInstallerUrl": "https://dl.ainivox.cn/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
       "localFastAlternateUrls": [
         "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe"
       ],
-      "localFastFileSize": 105301707,
+      "localFastFileSize": 105357700,
       "editions": {
         "standard": {
           "label": "云同步版",
@@ -65,9 +65,9 @@
             "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher-2.1.5-win-x64.exe"
           ],
           "fileName": "Auth.API.Switcher-2.1.5-win-x64.exe",
-          "fileSize": 105356904,
-          "sha256": "7dce0bbdced1fac4bf246cc726c6dd8364dd0611c5571e3728159024f49b6849",
-          "sha512": "5tiy1CLLyuODELXfC3KkND1mSKCI2DUlupXqtGBvIqeK2YVfmyNIT8yt5NypzHM9zk1GWtYZkci3ubkTKe41sw=="
+          "fileSize": 105302280,
+          "sha256": "76d3e834b6fcd69a126368e1f4c9136134a711d1b04423a35791517f7ef247b4",
+          "sha512": "CcSKsQ7cGNfOn2w5kvkQGniizCMVj/GoQUsoT6hIqIA99N4XozsnyKWrvipRXADD3rR+xOowPiht1M84vxRLzg=="
         },
         "localFast": {
           "label": "本地极速版",
@@ -78,9 +78,9 @@
             "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.5/Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe"
           ],
           "fileName": "Auth.API.Switcher.Local.Fast-2.1.5-win-x64.exe",
-          "fileSize": 105301707,
-          "sha256": "041fe0c5231170d3731183fca85576ac92122cecb9e15a6daf0c2eb587879797",
-          "sha512": "0Kh54pcMIkfSj/UNvmHoVwAABqAy8J5zPFcrPFzmiYYRcO4vuAG2h9/Kg+ZdjBOaAXKbl1A4WsoGTuxUxBjDzA=="
+          "fileSize": 105357700,
+          "sha256": "8d00ac932baf47ed95a7d7f2398bdd2cb14012b546c35aa732b134a69a8c896b",
+          "sha512": "PuvpjwXDy6+NaYZASZAZv9uJsGU5Wf6Gs98KugDW3QAscmSBAnX26y3dukqhzkW2QVTzNQ2fWct6BdAl31j/sw=="
         }
       },
       "portableUrl": null
