@@ -1,74 +1,92 @@
 {
   "appId": "com.jerryc0820.auth-api-switcher",
   "channel": "stable",
-  "version": "2.1.7",
-  "minSupportedVersion": "2.1.7",
+  "version": "2.1.8",
+  "minSupportedVersion": "2.1.8",
   "mandatory": false,
-  "releaseTime": "2026-06-01T05:49:45.880Z",
-  "notes": "Release 2.1.7",
-  "notesUrl": "https://dl.ainivox.cn/release-notes/2.1.7.md",
-  "sha256": "507831e0b09f0b8705d3b07e6585e9385a5263486fd8046cc10929e6c0ade104",
-  "signature": "hjb3Qa8Mk2T+qDAM8NABJpRd7oQSHdcANgW33a4jGP/89AE8XV4AnGT8qxLnVxhmLDXL8yBI0Qw7Dw6zCpdSDQ==",
+  "releaseTime": "2026-06-01T06:47:55.435Z",
+  "notes": "Release 2.1.8",
+  "notesUrl": "https://dl.ainivox.cn/release-notes/2.1.8.md",
+  "sha256": "4c7b54601967496bda30a03b70b8757433d7f8dd26d8104d7a6f46c8387c1589",
+  "signature": "zJ7neLZjCOWuT1hjQe8HyD+wt5EIamU76/gLSQS0T84qMX/Kd57P6VhWnXKWeARoVnbmx0r0hO1drd7v46N5BA==",
   "mirrors": {
-    "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.1.7",
+    "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.1.8",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
   },
   "editions": {
     "standard": {
       "label": "云同步版",
       "platform": "windows-x64",
-      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher-2.1.7-win-x64.exe",
-      "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher-2.1.7-win-x64.exe",
-      "alternateUrls": [],
-      "fileName": "Auth.API.Switcher-2.1.7-win-x64.exe",
-      "fileSize": 105302823,
-      "sha256": "507831e0b09f0b8705d3b07e6585e9385a5263486fd8046cc10929e6c0ade104",
-      "sha512": "MTqfA9K9gF5Hr3znKqbaIbhsMUYaUdfIBR9wCIARWs/5Lx0g4z2xPymr1/KEpGYy+ktZCoFhoOkmnm/mhkaf9Q=="
+      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+      "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+      "alternateUrls": [
+        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+        "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe"
+      ],
+      "fileName": "Auth.API.Switcher-2.1.8-win-x64.exe",
+      "fileSize": 105357960,
+      "sha256": "4c7b54601967496bda30a03b70b8757433d7f8dd26d8104d7a6f46c8387c1589",
+      "sha512": "r9gGhd2QvQttOswvWAU+7SWwkB2IiWkVprYHAaTwqpLVVOjKMwvT+KwO4lSkTeg11sJN9BRTzGBaBI5XyYRpYg=="
     },
     "localFast": {
       "label": "本地极速版",
       "platform": "windows-x64-local-fast",
-      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-      "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-      "alternateUrls": [],
-      "fileName": "Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-      "fileSize": 105358349,
-      "sha256": "548b396c9ea74121e1ebb471830ce840a42c1c6d79d9abb07a681a2f93e8dadd",
-      "sha512": "ChMUVZ1sN7Z0yp4sTJNZUewIoIw66eilJNVaQeN21W6QFvOe6psRH7ao0QLK2/MVzToRLmER6efr5Yjj81Y+8A=="
+      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+      "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+      "alternateUrls": [
+        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+        "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe"
+      ],
+      "fileName": "Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+      "fileSize": 105360600,
+      "sha256": "ef9f4cb87edd350addb8f5e7169bca80f1e97d4096b4caf1458b6118ad698f10",
+      "sha512": "THlJk52sesxau6rl4T2S2ZujKHfgeZ+Dekc+W0BcqeIydHzNX+qW/jOWKO8mMJKf/TxOkIgQl+wSPMsg9nycJQ=="
     }
   },
   "platforms": {
     "win": {
-      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher-2.1.7-win-x64.exe",
-      "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher-2.1.7-win-x64.exe",
-      "alternateUrls": [],
-      "fileSize": 105302823,
-      "sha512": "MTqfA9K9gF5Hr3znKqbaIbhsMUYaUdfIBR9wCIARWs/5Lx0g4z2xPymr1/KEpGYy+ktZCoFhoOkmnm/mhkaf9Q==",
-      "localFastInstallerUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-      "localFastAlternateUrls": [],
-      "localFastFileSize": 105358349,
+      "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+      "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+      "alternateUrls": [
+        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+        "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe"
+      ],
+      "fileSize": 105357960,
+      "sha512": "r9gGhd2QvQttOswvWAU+7SWwkB2IiWkVprYHAaTwqpLVVOjKMwvT+KwO4lSkTeg11sJN9BRTzGBaBI5XyYRpYg==",
+      "localFastInstallerUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+      "localFastAlternateUrls": [
+        "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+        "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe"
+      ],
+      "localFastFileSize": 105360600,
       "editions": {
         "standard": {
           "label": "云同步版",
           "platform": "windows-x64",
-          "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher-2.1.7-win-x64.exe",
-          "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher-2.1.7-win-x64.exe",
-          "alternateUrls": [],
-          "fileName": "Auth.API.Switcher-2.1.7-win-x64.exe",
-          "fileSize": 105302823,
-          "sha256": "507831e0b09f0b8705d3b07e6585e9385a5263486fd8046cc10929e6c0ade104",
-          "sha512": "MTqfA9K9gF5Hr3znKqbaIbhsMUYaUdfIBR9wCIARWs/5Lx0g4z2xPymr1/KEpGYy+ktZCoFhoOkmnm/mhkaf9Q=="
+          "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+          "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+          "alternateUrls": [
+            "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe",
+            "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher-2.1.8-win-x64.exe"
+          ],
+          "fileName": "Auth.API.Switcher-2.1.8-win-x64.exe",
+          "fileSize": 105357960,
+          "sha256": "4c7b54601967496bda30a03b70b8757433d7f8dd26d8104d7a6f46c8387c1589",
+          "sha512": "r9gGhd2QvQttOswvWAU+7SWwkB2IiWkVprYHAaTwqpLVVOjKMwvT+KwO4lSkTeg11sJN9BRTzGBaBI5XyYRpYg=="
         },
         "localFast": {
           "label": "本地极速版",
           "platform": "windows-x64-local-fast",
-          "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-          "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.7/Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-          "alternateUrls": [],
-          "fileName": "Auth.API.Switcher.Local.Fast-2.1.7-win-x64.exe",
-          "fileSize": 105358349,
-          "sha256": "548b396c9ea74121e1ebb471830ce840a42c1c6d79d9abb07a681a2f93e8dadd",
-          "sha512": "ChMUVZ1sN7Z0yp4sTJNZUewIoIw66eilJNVaQeN21W6QFvOe6psRH7ao0QLK2/MVzToRLmER6efr5Yjj81Y+8A=="
+          "installerUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+          "primaryUrl": "https://dl.ainivox.cn/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+          "alternateUrls": [
+            "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+            "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases/download/v2.1.8/Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe"
+          ],
+          "fileName": "Auth.API.Switcher.Local.Fast-2.1.8-win-x64.exe",
+          "fileSize": 105360600,
+          "sha256": "ef9f4cb87edd350addb8f5e7169bca80f1e97d4096b4caf1458b6118ad698f10",
+          "sha512": "THlJk52sesxau6rl4T2S2ZujKHfgeZ+Dekc+W0BcqeIydHzNX+qW/jOWKO8mMJKf/TxOkIgQl+wSPMsg9nycJQ=="
         }
       },
       "portableUrl": null
