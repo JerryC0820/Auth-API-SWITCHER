@@ -4,11 +4,11 @@
   "version": "2.1.8",
   "minSupportedVersion": "2.1.8",
   "mandatory": false,
-  "releaseTime": "2026-06-01T06:47:55.435Z",
+  "releaseTime": "2026-06-01T06:48:48.690Z",
   "notes": "Release 2.1.8",
   "notesUrl": "https://dl.ainivox.cn/release-notes/2.1.8.md",
   "sha256": "4c7b54601967496bda30a03b70b8757433d7f8dd26d8104d7a6f46c8387c1589",
-  "signature": "zJ7neLZjCOWuT1hjQe8HyD+wt5EIamU76/gLSQS0T84qMX/Kd57P6VhWnXKWeARoVnbmx0r0hO1drd7v46N5BA==",
+  "signature": "e+C+wy1Py/GIZHgd3HvBVoE0HnkQtU4n3xdmMypJU6NwXotZsktmGrMY3+r8hzu3npJ+ZnuQuVLeMzd4wF57Ag==",
   "mirrors": {
     "github": "https://github.com/JerryC0820/Auth-API-SWITCHER/releases/tag/v2.1.8",
     "gitee": "https://gitee.com/chen-bin98/Auth-API-SWITCHER/releases"
